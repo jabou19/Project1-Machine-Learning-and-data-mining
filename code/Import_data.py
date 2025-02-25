@@ -47,7 +47,6 @@ for i in range(M):
             else:
                 xx[j, i] = 2 #sex = 2 for infants
 
-
 # %%
 import matplotlib.pyplot as plt
 plt.figure(figsize=(8, 7))
@@ -61,13 +60,10 @@ for i in range(M):
 
 plt.show()
 # %% Standardize the data
-# Subtract the mean from the data   
-
+# Subtract the mean from the data
 x_normalized = np.empty((N, M))
 for i in range(M):
     x_normalized[:, i] = (xx[:, i] - np.mean(xx[:, i]))/np.std(xx[:, i])
-
-
 # %%
 plt.figure()
 plt.boxplot(x_normalized)
@@ -75,7 +71,6 @@ plt.xticks(range(1, 9), attributeNames, rotation=60)
 #plt.ylabel("cm")
 plt.title("Abalone boxplot")
 plt.show()
-
 print("Ran Exercise 2.3.3")
 
 # %%
