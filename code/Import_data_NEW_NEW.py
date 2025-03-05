@@ -63,6 +63,9 @@ for i in range(M):
     plt.hist(xx[:, i], color=(0.2, 0.8 - i/4 * 0.2, 0.4))
     plt.xlabel(attributeNames[i])
     plt.ylim(0, N / 1.3)
+plt.subplot(int(u), int(v), 11)
+plt.hist(yy[:], color=(0.2, 0.8 - i/4 * 0.2, 0.4))
+plt.xlabel("Class Labels")
 
 plt.show()
 # %% Standardize the data
@@ -75,8 +78,8 @@ for i in range(M):
 
 # %%
 plt.figure()
-plt.boxplot(x_normalized)
-plt.xticks(range(1, 11), attributeNames, rotation=60)
+plt.boxplot(x_normalized[:,:7])
+plt.xticks(range(1, 8), attributeNames[:7], rotation=60)
 #plt.ylabel("cm")
 plt.title("Standardized Abalone boxplot")
 plt.show()
@@ -108,22 +111,30 @@ plt.show()
 
 # %%
 plt.figure(figsize=(12, 10))
-for m1 in range(M):
-    for m2 in range(M):
-        plt.subplot(M, M, m1 * M + m2 + 1)
-        for c in range(C):
-            class_mask = yy == c
-            plt.plot(np.array(x_normalized[class_mask, m2]), np.array(x_normalized[class_mask, m1]), ".")
-            if m1 == M - 1:
-                plt.xlabel(attributeNames[m2])
-            else:
-                plt.xticks([])
-            if m2 == 0:
-                plt.ylabel(attributeNames[m1])
-            else:
-                plt.yticks([])
-                            
-plt.legend(classNames)
+# Create a colormap
+cmap = plt.get_cmap("Reds")
+
+# Normalize the class labels for color mapping
+norm = plt.Normalize(vmin=1, vmax=C)
+
+# Create a grid of subplots
+fig, axes = plt.subplots(M-3, M-3, figsize=(12, 10))
+
+for m1 in range(M-3):
+    for m2 in range(M-3):
+        ax = axes[m1, m2]
+        sc = ax.scatter(x_normalized[:, m2], x_normalized[:, m1], c=yy, cmap=cmap, norm=norm, alpha=0.5)
+        if m1 == M - 4:
+            ax.set_xlabel(attributeNames[m2])
+        else:
+            ax.set_xticks([])
+        if m2 == 0:
+            ax.set_ylabel(attributeNames[m1])
+        else:
+            ax.set_yticks([])
+
+# Add a single colorbar for the entire figure
+fig.colorbar(sc, ax=axes, label='Class Labels', orientation='vertical')
 
 plt.show()
 
@@ -137,12 +148,13 @@ from scipy.linalg import svd
 
 # Subtract mean value from data
 # Note: Here we use Y to in teh book we often use X with a hat-symbol on top.
-Y = x_normalized[:,1:] - np.ones((N, 1)) * x_normalized[:,1:].mean(axis=0)
+#Y = x_normalized[:,1:] - np.ones((N, 1)) * x_normalized[:,1:].mean(axis=0)
+Y = x_normalized[:,:7]
 
 # PCA by computing SVD of Y
 # Note: Here we call the Sigma matrix in the SVD S for notational convinience
 U, S, Vh = svd(Y, full_matrices=False)
-
+print(Vh)
 # scipy.linalg.svd returns "Vh", which is the Hermitian (transpose)
 # of the vector V. So, for us to obtain the correct V, we transpose:
 V = Vh.T
@@ -165,6 +177,37 @@ plt.legend(["Individual", "Cumulative", "Threshold"])
 plt.grid()
 plt.show()
 
+#%%
+
+import matplotlib.pyplot as plt
+
+# Data attributes to be plotted
+i = 0
+j = 1
+
+##
+# Make a simple plot of the i'th attribute against the j'th attribute
+plt.plot(x_normalized[:, i], x_normalized[:, j], "o")
+
+##
+# Make another more fancy plot that includes legend, class labels,
+# attribute names, and a title.
+f = plt.figure()
+plt.title("NanoNose data")
+
+for c in range(C):
+    # select indices belonging to class c:
+    class_mask = yy == c 
+    plt.plot(x_normalized[class_mask, i], x_normalized[class_mask, j], "o", alpha=0.3)
+
+plt.legend(classNames)
+plt.xlabel(attributeNames[i])
+plt.ylabel(attributeNames[j])
+
+# Output result to screen
+plt.show()
+
+
 
 # %%
 # Project the centered data onto principal component space
@@ -178,7 +221,7 @@ j = 1
 
 # Plot PCA of the data
 f = plt.figure()
-plt.title("NanoNose data: PCA")
+plt.title("Abalone data: PCA")
 # Create a colormap
 cmap = plt.get_cmap("Reds")
 
@@ -192,6 +235,9 @@ plt.colorbar(sc, label='Class Labels')  # Add colorbar
 plt.xlabel("PC{0}".format(i + 1))
 plt.ylabel("PC{0}".format(j + 1))
 
+# Set y-axis limit
+plt.ylim(-3, 3)
+
 # Output result to screen
 plt.show()
-# %%
+    # %%
