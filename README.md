@@ -1,7 +1,7 @@
 # Machine-Leaning-Project1
 It is a project 1 for the Introduction to Machine Learning and Data Mining course.
 
-The project description [project_1.pdf](Project-description/02450%20project_1.pdf) and the project data set [finding_a_dataset_for_reports.pdf]([finding_a_dataset_for_reports.pdf](Project-description/02450%20finding_a_dataset_for_reports.pdf)).
+The project description [project_1.pdf](Project-description/02450%20project_1.pdf) and the project data set [finding_a_dataset_for_reports.pdf](Project-description/02450%20finding_a_dataset_for_reports.pdf).
 
 The report on the project [report.pdf](Report/report.pdf) 
 # 1. Title of Database: 
