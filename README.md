@@ -5,7 +5,7 @@ It is a project 1 for introduction to machine learning course
     Abalone data
 
 # 2. Sources:
-     source of data [Abalone data](https://archive.ics.uci.edu/dataset/1/abalone) 
+     source of data [Abalone data](https://archive.ics.uci.edu/dataset/1/abalone)
     (a) Original owners of database:
 	Marine Resources Division
 	Marine Research Laboratories - Taroona
