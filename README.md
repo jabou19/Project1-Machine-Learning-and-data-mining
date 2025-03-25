@@ -1,6 +1,7 @@
 # Machine-Leaning-Project1
-It is a project 1 for introduction to machine learning course
-
+It is a project 1 for the Introduction to Machine Learning and Data Mining course
+[The project description](Project-description/02450%20project_1.pdf) and the project data set
+The report on the project 
 # 1. Title of Database: 
     Abalone data
 
